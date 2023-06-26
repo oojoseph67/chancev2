@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThirdwebProvider activeChain={activeChain}>
       <Head>
-        <title>Chance Exchange</title>
+        <title>Chance Lottery</title>
       </Head>
       <Component {...pageProps} />
       <Toaster></Toaster>

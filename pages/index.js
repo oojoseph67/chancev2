@@ -22,6 +22,7 @@ import {
   useSwitchChain,
   ConnectWallet,
   useNetwork,
+  useMetadata,
 } from "@thirdweb-dev/react";
 import { Goerli, BinanceTestnet, Binance } from "@thirdweb-dev/chains";
 
@@ -61,13 +62,17 @@ export default function Home() {
   console.log("address", address);
 
   const { contract: tokenContract } = useContract(
-    process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS
+    process.env.NEXT_PUBLIC_MAIN_TOKEN_CONTRACT_ADDRESS,
+    "token"
   );
   console.log("contract", contract);
   console.log("token contract", tokenContract);
 
+  const { data: tokenMetadata } = useMetadata(tokenContract);
+  console.log("🚀 ~ file: index.js:72 ~ Home ~ tokenMetadata:", tokenMetadata)
+
   const { contract: chanceContract } = useContract(
-    process.env.NEXT_PUBLIC_TOKEN_CONTRACT_ADDRESS,
+    process.env.NEXT_PUBLIC_MAIN_TOKEN_CONTRACT_ADDRESS,
     tokenABI
   );
 
@@ -79,8 +84,8 @@ export default function Home() {
   console.log("🚀 ~ file: page.js:49 ~ Home ~ tokenDetails:", tokenDetails);
 
   const tokenBalanceBal = tokenDetails?.displayValue;
-  const tokenSymbol = tokenDetails?.symbol;
-  const tokenName = tokenDetails?.name;
+  const tokenSymbol = tokenMetadata?.symbol;
+  const tokenName = tokenMetadata?.name;
   const tokenDecimal = tokenDetails?.decimals;
 
   const ticketUserCanBuy = 20 - userTickets;
